@@ -296,7 +296,7 @@ class ResNetBackbone(nn.Module):
         x = self.layer1(x)
 
         # the same effect as lda operation in the paper, but save much more memory
-        lda_1 = self.lda1_fc(self.lda1_pool(x).view(x.size(0), -1))
+        lda_1 = self.lda1_fc(self.lda1_pool(x).view(x.size(0), -1))     # lda_1 tensor size (96,16)
         x = self.layer2(x)
         lda_2 = self.lda2_fc(self.lda2_pool(x).view(x.size(0), -1))
         x = self.layer3(x)

@@ -3,6 +3,8 @@ from scipy import stats
 import numpy as np
 import models
 import data_loader
+import os
+
 
 class HyperIQASolver(object):
     """Solver for training and testing hyperIQA"""
@@ -10,12 +12,31 @@ class HyperIQASolver(object):
 
         self.epochs = config.epochs
         self.test_patch_num = config.test_patch_num
+        self.device = torch.device('cuda:0' if torch.cuda.device_count() > 0 else 'cpu')
 
-        self.model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).cuda()
+        # 1、数据加载
+        train_loader = data_loader.DataLoader(config.dataset, path, train_idx, config.patch_size, config.train_patch_num, batch_size=config.batch_size, istrain=True)
+        test_loader = data_loader.DataLoader(config.dataset, path, test_idx, config.patch_size, config.test_patch_num, istrain=False)
+        self.train_data = data_loader.DataPrefetcher(train_loader.get_data(), device=self.device)
+        self.test_data = data_loader.DataPrefetcher(test_loader.get_data(), device=self.device)
+
+        # 2、模型
+        self.model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).to(device=self.device) #.cuda()  # Hyper Network, 包含backbone
         self.model_hyper.train(True)
 
+        # 5、迁移学习
+        if config.resume is not None:
+            save_model = torch.load(config.resume)
+
+            model_dict = self.model_hyper.state_dict()
+            state_dict = {k: v for k, v in save_model.items() if k in model_dict.keys()}
+            model_dict.update(state_dict)
+            self.model_hyper.load_state_dict(model_dict)
+
+        # 3、loss
         self.l1_loss = torch.nn.L1Loss().cuda()
 
+        # 4、优化器
         backbone_params = list(map(id, self.model_hyper.res.parameters()))
         self.hypernet_params = filter(lambda p: id(p) not in backbone_params, self.model_hyper.parameters())
         self.lr = config.lr
@@ -26,24 +47,24 @@ class HyperIQASolver(object):
                  ]
         self.solver = torch.optim.Adam(paras, weight_decay=self.weight_decay)
 
-        train_loader = data_loader.DataLoader(config.dataset, path, train_idx, config.patch_size, config.train_patch_num, batch_size=config.batch_size, istrain=True)
-        test_loader = data_loader.DataLoader(config.dataset, path, test_idx, config.patch_size, config.test_patch_num, istrain=False)
-        self.train_data = train_loader.get_data()
-        self.test_data = test_loader.get_data()
 
-    def train(self):
-        """Training"""
+
+
+
+    def train(self, train_test_num=1):
+        """Training all epochs"""
         best_srcc = 0.0
         best_plcc = 0.0
-        print('Epoch\tTrain_Loss\tTrain_SRCC\tTest_SRCC\tTest_PLCC')
+        # epochs
         for t in range(self.epochs):
             epoch_loss = []
             pred_scores = []
             gt_scores = []
-
+            # iter
+            counter = 0
             for img, label in self.train_data:
-                img = torch.tensor(img.cuda())
-                label = torch.tensor(label.cuda())
+                # img = torch.tensor(img.cuda())
+                # label = torch.tensor(label.cuda())
 
                 self.solver.zero_grad()
 
@@ -65,12 +86,19 @@ class HyperIQASolver(object):
                 loss.backward()
                 self.solver.step()
 
+                counter += 1
+                if counter % 40 == 0:
+                    print("This iter loss is {}".format(loss))
+
             train_srcc, _ = stats.spearmanr(pred_scores, gt_scores)
 
             test_srcc, test_plcc = self.test(self.test_data)
             if test_srcc > best_srcc:
                 best_srcc = test_srcc
                 best_plcc = test_plcc
+                print("Saving pth .........")
+                torch.save(self.model_hyper.state_dict(), os.path.join("./pretrained/multilevel_{}_{}.pth".format(train_test_num, t)))
+            print('Epoch\tTrain_Loss\tTrain_SRCC\tTest_SRCC\tTest_PLCC')
             print('%d\t%4.3f\t\t%4.4f\t\t%4.4f\t\t%4.4f' %
                   (t + 1, sum(epoch_loss) / len(epoch_loss), train_srcc, test_srcc, test_plcc))
 
