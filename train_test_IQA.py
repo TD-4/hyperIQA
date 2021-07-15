@@ -31,7 +31,7 @@ def main(config):
         'livec': list(range(0, 1162)),
         'koniq-10k': list(range(0, 10073)),
         'bid': list(range(0, 586)),
-        'multilevel': list(range(0, 209)),  # 20210423 共209张
+        'multilevel': list(range(0, 239)),  # 20210423_0cf 共209张
     }
     sel_num = img_num[config.dataset]   # number length of select dataset
 
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     parser.add_argument('--epochs', dest='epochs', type=int, default=16, help='Epochs for training')
     parser.add_argument('--patch_size', dest='patch_size', type=int, default=224, help='Crop size for training & testing image patches')
     parser.add_argument('--train_test_num', dest='train_test_num', type=int, default=10, help='Train-test times')
-    parser.add_argument('--resume', dest='resume', type=str, default='./pretrained/koniq_pretrained.pkl', help='weight from other dataset')
+    parser.add_argument('--resume', dest='resume', type=str, default='./pretrained/multilevel.pth', help='weight from other dataset')
 
     config = parser.parse_args()
     main(config)

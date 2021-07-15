@@ -27,7 +27,7 @@ class HyperIQASolver(object):
         # 5、迁移学习
         if config.resume is not None:
             save_model = torch.load(config.resume)
-
+            print("load weight from {}".format(config.resume))
             model_dict = self.model_hyper.state_dict()
             state_dict = {k: v for k, v in save_model.items() if k in model_dict.keys()}
             model_dict.update(state_dict)
@@ -61,7 +61,6 @@ class HyperIQASolver(object):
             pred_scores = []
             gt_scores = []
             # iter
-            counter = 0
             for img, label in self.train_data:
                 # img = torch.tensor(img.cuda())
                 # label = torch.tensor(label.cuda())
@@ -85,10 +84,6 @@ class HyperIQASolver(object):
                 epoch_loss.append(loss.item())
                 loss.backward()
                 self.solver.step()
-
-                counter += 1
-                if counter % 40 == 0:
-                    print("This iter loss is {}".format(loss))
 
             train_srcc, _ = stats.spearmanr(pred_scores, gt_scores)
 

@@ -65,15 +65,17 @@ class DataLoader(object):
             if istrain:
                 transforms = torchvision.transforms.Compose([
                     torchvision.transforms.RandomHorizontalFlip(),
-                    torchvision.transforms.Resize((512, 512)),
-                    torchvision.transforms.RandomCrop(size=patch_size),
+                    # torchvision.transforms.Resize((224, 224)),
+                    # torchvision.transforms.RandomCrop(size=patch_size),
+                    torchvision.transforms.Resize((patch_size, patch_size)),
                     torchvision.transforms.ToTensor(),
                     torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                                      std=(0.229, 0.224, 0.225))])
             else:
                 transforms = torchvision.transforms.Compose([
-                    torchvision.transforms.Resize((512, 512)),
-                    torchvision.transforms.RandomCrop(size=patch_size),
+                    # torchvision.transforms.Resize((224, 224)),
+                    # torchvision.transforms.RandomCrop(size=patch_size),
+                    torchvision.transforms.Resize((patch_size, patch_size)),
                     torchvision.transforms.ToTensor(),
                     torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                                      std=(0.229, 0.224, 0.225))])
