@@ -23,8 +23,9 @@ def cls(path=""):
     # load our pre-trained model on the koniq-10k dataset
     model_hyper.load_state_dict((torch.load('multilevel_r.pth', map_location=device)))
     transforms = torchvision.transforms.Compose([
-        torchvision.transforms.Resize((256, 256)),
-        torchvision.transforms.RandomCrop(size=224),
+        # torchvision.transforms.Resize((256, 256)),
+        # torchvision.transforms.RandomCrop(size=224),
+        torchvision.transforms.Resize((224, 224)),
         torchvision.transforms.ToTensor(),
         torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                          std=(0.229, 0.224, 0.225))])
