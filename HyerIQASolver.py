@@ -47,24 +47,16 @@ class HyperIQASolver(object):
                  ]
         self.solver = torch.optim.Adam(paras, weight_decay=self.weight_decay)
 
-
-
-
-
     def train(self, train_test_num=1):
         """Training all epochs"""
         best_srcc = 0.0
         best_plcc = 0.0
         # epochs
-        for t in range(self.epochs):
+        for t in range(self.epochs):    # epochs
             epoch_loss = []
             pred_scores = []
             gt_scores = []
-            # iter
-            for img, label in self.train_data:
-                # img = torch.tensor(img.cuda())
-                # label = torch.tensor(label.cuda())
-
+            for img, label in self.train_data:  # iters
                 self.solver.zero_grad()
 
                 # Generate weights for target network
@@ -88,7 +80,7 @@ class HyperIQASolver(object):
             train_srcc, _ = stats.spearmanr(pred_scores, gt_scores)
 
             test_srcc, test_plcc = self.test(self.test_data)
-            if test_srcc > best_srcc:
+            if test_srcc > best_srcc:   # 当前epoch的效果是否大于best，是则保存pth；否则，无操作
                 best_srcc = test_srcc
                 best_plcc = test_plcc
                 print("Saving pth .........")
