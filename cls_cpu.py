@@ -21,7 +21,7 @@ def cls(path=""):
     model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).to(device=device)
     model_hyper.train(False)
     # load our pre-trained model on the koniq-10k dataset
-    model_hyper.load_state_dict((torch.load('multilevel_r.pth', map_location=device)))
+    model_hyper.load_state_dict((torch.load('multilevel_3.pth', map_location=device)))
     transforms = torchvision.transforms.Compose([
         # torchvision.transforms.Resize((256, 256)),
         # torchvision.transforms.RandomCrop(size=224),
@@ -63,10 +63,14 @@ def cls(path=""):
 
         select_max = sorted(res_dict.keys(), reverse=True)
         if res_dict[select_max[0]][0] not in set(('1','2','3','4','5','6','7','8','9','0')):
-            os.rename(os.path.join(path, folder), os.path.join(path, folder + "----" + res_dict[select_max[1]][:10]))
+            if res_dict[select_max[1]][0] not in set(('1', '2', '3', '4', '5', '6', '7', '8', '9', '0')):
+                os.rename(os.path.join(path, folder),
+                          os.path.join(path, folder + "----" + res_dict[select_max[2]][:10]))
+            else:
+                os.rename(os.path.join(path, folder), os.path.join(path, folder + "----" + res_dict[select_max[1]][:10]))
             continue
         os.rename(os.path.join(path, folder), os.path.join(path, folder + "----" + res_dict[select_max[0]][:10]))
 
-if __name__ == "__main__":
 
-    cls(path=r"F:\复检扣小图-0501")
+if __name__ == "__main__":
+    cls(path=r"F:\Data\IQA\level_\test\复检扣小图-0504--造纯CF")
