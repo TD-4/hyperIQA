@@ -1,5 +1,8 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
+.idea
+.gitignore
+
+# Byte-compiled / optimized / DLL files
 *.py[cod]
 *$py.class
 
