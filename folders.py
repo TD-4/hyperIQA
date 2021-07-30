@@ -315,7 +315,7 @@ class MultiLevelFoler(data.Dataset):
     def __init__(self, root, index, transform, patch_num):
 
         refpath = os.path.join(root)    # 原始图片路径
-        refname = [img for img in os.listdir(refpath) if "".join(img.split("_")[-2:-1])  == "1.0"]  # 所有原始图片名称
+        refname = [img for img in os.listdir(refpath) if img[:3] == "ref"]  # 所有原始图片名称
         txtpath = os.path.join(root, 'labels.txt')
         fh = open(txtpath, 'r')
         imgnames = []   # 图片名称列表
@@ -325,8 +325,7 @@ class MultiLevelFoler(data.Dataset):
             words = line.split()
             imgnames.append(words[0])
             target.append(words[1])
-            ref_temp = words[0].split("_")  # 20210423_0_0.09_.bmp 0.09
-            refnames_all.append(ref_temp[0] + "_" + ref_temp[1] + "_1.0_" + ref_temp[-1])
+            refnames_all.append(words[2])
 
         labels = np.array(target).astype(np.float32)
         refnames_all = np.array(refnames_all)

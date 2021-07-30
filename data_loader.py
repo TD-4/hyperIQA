@@ -10,7 +10,7 @@ class DataLoader(object):
 
         self.batch_size = batch_size
         self.istrain = istrain
-
+        # 定义不同Dataset的transforms
         if (dataset == 'live') | (dataset == 'csiq') | (dataset == 'tid2013') | (dataset == 'livec'):
             # Train transforms
             if istrain:
@@ -79,7 +79,7 @@ class DataLoader(object):
                     torchvision.transforms.ToTensor(),
                     torchvision.transforms.Normalize(mean=(0.485, 0.456, 0.406),
                                                      std=(0.229, 0.224, 0.225))])
-
+        # 定义Dataset
         if dataset == 'live':
             self.data = folders.LIVEFolder(
                 root=path, index=img_indx, transform=transforms, patch_num=patch_num)
