@@ -1,7 +1,7 @@
 __pycache__/
 .idea
 .gitignore
-
+pretrained
 # Byte-compiled / optimized / DLL files
 *.py[cod]
 *$py.class

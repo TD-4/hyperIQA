@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dbc4b72a-35e4-45b3-8d20-1713a7783c2f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/hyperIQA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/hyperIQA.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cls_cpu.py" beforeDir="false" afterPath="$PROJECT_DIR$/cls_cpu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/csiq_label.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +38,7 @@
       <recent name="F:\GitHub\hyperIQA" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.export_onnx2">
+  <component name="RunManager" selected="Python.img-gen-trainvallist">
     <configuration name="cls_cpu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="hyperIQA" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -88,7 +83,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="onnx_run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="img-gen-trainvallist" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="hyperIQA" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -101,7 +96,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/onnx_run.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/img-gen-trainvallist.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -156,11 +151,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.img-gen-trainvallist" />
         <item itemvalue="Python.export_onnx2" />
         <item itemvalue="Python.cls_cpu" />
         <item itemvalue="Python.train_test_IQA" />
         <item itemvalue="Python.onnx_run2" />
-        <item itemvalue="Python.onnx_run" />
       </list>
     </recent_temporary>
   </component>
@@ -192,7 +187,9 @@
       <workItem from="1627385947403" duration="10028000" />
       <workItem from="1627530708011" duration="664000" />
       <workItem from="1627536222042" duration="26000" />
-      <workItem from="1627607171833" duration="2216000" />
+      <workItem from="1627607171833" duration="3087000" />
+      <workItem from="1627610967808" duration="80000" />
+      <workItem from="1628241935447" duration="2216000" />
     </task>
     <servers />
   </component>
@@ -231,6 +228,7 @@
     <SUITE FILE_PATH="coverage/hyperIQA$export_onnx.coverage" NAME="export_onnx Coverage Results" MODIFIED="1626427468561" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/hyperIQA$onnx_run.coverage" NAME="onnx_run Coverage Results" MODIFIED="1626682885907" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/hyperIQA$cls_cpu.coverage" NAME="cls_cpu Coverage Results" MODIFIED="1627443452235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/hyperIQA$img_gen_trainvallist.coverage" NAME="img-gen-trainvallist Coverage Results" MODIFIED="1628243728811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/hyperIQA$onnx_run2.coverage" NAME="onnx_run2 Coverage Results" MODIFIED="1626687660691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/hyperIQA$export_onnx2.coverage" NAME="export_onnx2 Coverage Results" MODIFIED="1627530774114" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

@@ -27,6 +27,8 @@
 - cls.py/cls_cpu.py:    项目需求，对整个文件夹中的图片进行推理。代码逻辑与demo.py一致
 - export_onnx.py/onnx_run.py:   export_onnx.py将modes.py中模型导出, 并使用onnx_run.py运行
 - export_onnx2.py/onnx_run2.py:   export_onnx2.py将modes2.py中模型导出, 并使用onnx_run2.py运行
+- img-score-tools.py:为一个文件夹评分的工具
+- img-gen-trainvallist.py:生成数据集的代码
 ### 2.2 效果展示/Testing a single image
 
 Predicting image quality with our model trained on the Koniq-10k Dataset.
