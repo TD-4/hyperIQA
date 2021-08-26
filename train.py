@@ -25,10 +25,10 @@ def main(config):
         'livec': '/home/ssl/Database/ChallengeDB_release/ChallengeDB_release/',
         'koniq-10k': '/home/ssl/Database/koniq-10k/',
         'bid': '/home/ssl/Database/BID/',
-        'multilevel': '/root/test/iqa/trainval/'
+        'multilevel': '/root/data/iqa/trainval/'
     }
 
-    # 原始图片数量
+    # 原始图片数量, 如果修改数据集大小，需修改img_num
     img_num = {
         'live': list(range(0, 29)),
         'csiq': list(range(0, 30)),
@@ -40,16 +40,16 @@ def main(config):
     }
     sel_num = img_num[config.dataset]   # number length of select dataset
 
-    srcc_all = np.zeros(config.train_test_num, dtype=np.float)  # 存放spearman系数
+    srcc_all = np.zeros(config.train_test_num, dtype=np.float)  # 存放spearman系数， 大小为epochs
     plcc_all = np.zeros(config.train_test_num, dtype=np.float)  # 存放pearson系数
 
     print('Training and testing on %s dataset for %d rounds...' % (config.dataset, config.train_test_num))
     for i in range(config.train_test_num):
-        print('Round %d' % (i+1))
+        print('Round %d' % (i+1))   # 1Round包括整个epochs， 一个epoch包括所有iters
         # Randomly select 90% images for training and the rest for testing
         random.shuffle(sel_num)
-        train_index = sel_num[0:int(round(0.9 * len(sel_num)))]
-        test_index = sel_num[int(round(0.9 * len(sel_num))):len(sel_num)]
+        train_index = sel_num[0:int(round(0.9 * len(sel_num)))]     # train数据集id数量
+        test_index = sel_num[int(round(0.9 * len(sel_num))):len(sel_num)]   # test数据集id数量
 
         solver = HyperIQASolver(config, folder_path[config.dataset], train_index, test_index)
         srcc_all[i], plcc_all[i] = solver.train(train_test_num=i)
