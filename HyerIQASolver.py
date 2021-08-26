@@ -1,9 +1,16 @@
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
+import os
 import torch
 from scipy import stats
 import numpy as np
-import models
-import data_loader
-import os
+from tqdm import tqdm
+
+from models import model
+from dataloader import data_loader
 
 
 class HyperIQASolver(object):
@@ -21,7 +28,7 @@ class HyperIQASolver(object):
         self.test_data = data_loader.DataPrefetcher(test_loader.get_data(), device=self.device)
 
         # 2、模型
-        self.model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).to(device=self.device) #.cuda()  # Hyper Network, 包含backbone
+        self.model_hyper = model.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).to(device=self.device)  # Hyper Network, 包含backbone
         self.model_hyper.train(True)
 
         # 5、迁移学习
@@ -56,14 +63,15 @@ class HyperIQASolver(object):
             epoch_loss = []
             pred_scores = []
             gt_scores = []
-            for img, label in self.train_data:  # iters
+            tbar = tqdm(self.test_data, ncols=130)
+            for img, label in tbar:  # iters
                 self.solver.zero_grad()
 
                 # Generate weights for target network
                 paras = self.model_hyper(img)  # 'paras' contains the network weights conveyed to target network
 
                 # Building target network
-                model_target = models.TargetNet(paras).cuda()
+                model_target = model.TargetNet(paras).cuda()
                 for param in model_target.parameters():
                     param.requires_grad = False
 
@@ -76,7 +84,8 @@ class HyperIQASolver(object):
                 epoch_loss.append(loss.item())
                 loss.backward()
                 self.solver.step()
-
+                # PRINT INFO
+                tbar.set_description('epoch ({}) | Loss: {:.3f} |'.format(t, loss))
             train_srcc, _ = stats.spearmanr(pred_scores, gt_scores)
 
             test_srcc, test_plcc = self.test(self.test_data)
@@ -86,7 +95,7 @@ class HyperIQASolver(object):
                 print("Saving pth .........")
                 torch.save(self.model_hyper.state_dict(), os.path.join("./pretrained/multilevel_{}_{}.pth".format(train_test_num, t)))
             print('Epoch\tTrain_Loss\tTrain_SRCC\tTest_SRCC\tTest_PLCC')
-            print('%d\t%4.3f\t\t%4.4f\t\t%4.4f\t\t%4.4f' %
+            print('%d\t%4.3f\t\t%4.4f\t\t%4.4f\t\t%4.4f\n' %
                   (t + 1, sum(epoch_loss) / len(epoch_loss), train_srcc, test_srcc, test_plcc))
 
             # Update optimizer
@@ -108,13 +117,13 @@ class HyperIQASolver(object):
         pred_scores = []
         gt_scores = []
 
-        for img, label in data:
+        for img, label in tqdm(data, 'val :', ncols=130):
             # Data.
             img = torch.tensor(img.cuda())
             label = torch.tensor(label.cuda())
 
             paras = self.model_hyper(img)
-            model_target = models.TargetNet(paras).cuda()
+            model_target = model.TargetNet(paras).cuda()
             model_target.train(False)
             pred = model_target(paras['target_in_vec'])
 

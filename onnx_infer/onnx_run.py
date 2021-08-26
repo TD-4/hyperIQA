@@ -1,3 +1,8 @@
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
 import numpy as np
 import os
 import time
@@ -72,7 +77,7 @@ if __name__ == "__main__":
     # exporter settings
     parser = argparse.ArgumentParser()
     parser.add_argument('--model', type=str, default='./hypernetwork.onnx', help="set model checkpoint path")
-    parser.add_argument('--image', type=str, default="./data/D_03.jpg", help='input image to use')
+    parser.add_argument('--image', type=str, default="./test/D_03.jpg", help='input image to use')
 
     args = parser.parse_args()
     # print(args)

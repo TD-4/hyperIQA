@@ -1,3 +1,8 @@
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
 import torch.utils.data as data
 from PIL import Image
 import os
@@ -86,10 +91,10 @@ class LIVEChallengeFolder(data.Dataset):
 
     def __init__(self, root, index, transform, patch_num):
 
-        imgpath = scipy.io.loadmat(os.path.join(root, 'Data', 'AllImages_release.mat'))
+        imgpath = scipy.io.loadmat(os.path.join(root, '../test', 'AllImages_release.mat'))
         imgpath = imgpath['AllImages_release']
         imgpath = imgpath[7:1169]
-        mos = scipy.io.loadmat(os.path.join(root, 'Data', 'AllMOS_release.mat'))
+        mos = scipy.io.loadmat(os.path.join(root, '../test', 'AllMOS_release.mat'))
         labels = mos['AllMOS_release'].astype(np.float32)
         labels = labels[0][7:1169]
 
@@ -311,26 +316,24 @@ class TID2013Folder(data.Dataset):
 
 
 class MultiLevelFoler(data.Dataset):
-
     def __init__(self, root, index, transform, patch_num):
-
-        refpath = os.path.join(root)    # 原始图片路径
-        refname = [img for img in os.listdir(refpath) if img[:3] == "ref"]  # 所有原始图片名称
-        txtpath = os.path.join(root, 'labels.txt')
-        fh = open(txtpath, 'r')
+        txtpath = os.path.join(root, 'trainvallist.txt')
         imgnames = []   # 图片名称列表
         target = []     # 清晰度列表，与图片列表对应
         refnames_all = []   # 参考图名称列表
+
+        fh = open(txtpath, 'r', encoding='gbk')
         for line in fh:
-            words = line.split()
-            imgnames.append(words[0])
-            target.append(words[1])
-            refnames_all.append(words[2])
+            words = line.strip().split("____")
+            imgnames.append(os.path.join(root,words[0],words[1],words[2]))
+            target.append(words[3])
+            refnames_all.append(os.path.join(root,words[0],words[1],words[4]))
 
         labels = np.array(target).astype(np.float32)
         refnames_all = np.array(refnames_all)
 
         sample = []
+        refname = list(set(refnames_all))  # 所有原始图片名称
 
         for i, item in enumerate(index):
             train_sel = (refname[index[i]] == refnames_all)     # 从[refnames_all]中选中refname[index[i]]
@@ -338,7 +341,7 @@ class MultiLevelFoler(data.Dataset):
             train_sel = train_sel[0].tolist()
             for j, item in enumerate(train_sel):
                 for aug in range(patch_num):
-                    sample.append((os.path.join(root, imgnames[item]), labels[item]))
+                    sample.append((imgnames[item], labels[item]))
         self.samples = sample
         self.transform = transform
 
@@ -351,7 +354,7 @@ class MultiLevelFoler(data.Dataset):
             tuple: (sample, target) where target is class_index of the target class.
         """
         path, target = self.samples[index]
-        sample = pil_loader(path)
+        sample = pil_loader(path.encode())
         sample = self.transform(sample)
 
         return sample, target

@@ -1,3 +1,8 @@
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
 import torch
 import torchvision
 import models
@@ -11,7 +16,7 @@ def pil_loader(path):
         return img.convert('RGB')
 
 
-im_path = './data/D_01.jpg'
+im_path = 'test/D_01.jpg'
 model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).cuda()
 model_hyper.train(False)
 # load our pre-trained model on the koniq-10k dataset
