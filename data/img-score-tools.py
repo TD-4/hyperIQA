@@ -1,4 +1,8 @@
-# coding:utf-8
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
 """
 图片评分工具
 """

@@ -18,7 +18,7 @@ if __name__ == "__main__":
     parser.add_argument('--model', type=str, default='./multilevel_r.pth', help="set model checkpoint path")
     parser.add_argument('--model_out1', type=str, default='./hypernetwork_1.8_.onnx')
     parser.add_argument('--model_out2', type=str, default='./targetnetwork.onnx')
-    parser.add_argument('--image', type=str, default="./data/D_03.jpg", help='input image to use')
+    parser.add_argument('--image', type=str, default="./test/D_03.jpg", help='input image to use')
 
     args = parser.parse_args()
     print(args)

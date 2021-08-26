@@ -33,7 +33,7 @@ def test_onnx(args):
     image[1] = (image[1] - MEAN[1]) / STD[1]
     image[2] = (image[2] - MEAN[2]) / STD[2]
 
-    image = np.expand_dims(image, axis=0)   # (1,3,224,224)
+    image = np.expand_dims(image, axis=0)
     # ----------------------------load the model
     sess = ort.InferenceSession(args.model)
     print('Loading onnx...')
@@ -53,12 +53,14 @@ def test_onnx(args):
     # print("Output shape :", output_shape)
     # output_type = sess.get_outputs()[0].type
     # print("Output type  :", output_type)
+    output_names = ["target_in_vec", "target_fc1w", "target_fc1b", "target_fc2w", "target_fc2b", "target_fc3w",
+                    "target_fc3b",
+                    "target_fc4w", "target_fc4b", "target_fc5w", "target_fc5b"]
 
     # ----------------------------get output
-    print("start ------")
     t3 = time.time()
-    for i in range(1):
-        prediction = sess.run([output_name], {input_name: image})[0]
+    result = []
+    prediction = sess.run(output_names, {input_name: image})
     t4 = time.time()
     print("Inference time with the ONNX model: {}".format(t4 - t3))
     print("Inference result:", prediction)
@@ -69,8 +71,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # exporter settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='./hypernetwork_targetnet.onnx', help="set model checkpoint path")
-    parser.add_argument('--image', type=str, default="./data/D_03.jpg", help='input image to use')
+    parser.add_argument('--model', type=str, default='./hypernetwork.onnx', help="set model checkpoint path")
+    parser.add_argument('--image', type=str, default="./test/D_03.jpg", help='input image to use')
 
     args = parser.parse_args()
     # print(args)

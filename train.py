@@ -1,3 +1,8 @@
+# _*_coding:utf-8_*_
+# @auther:FelixFu
+# @Date: 2021.8.26
+# @github:https://github.com/felixfu520
+
 import os
 import argparse
 import random
@@ -15,12 +20,12 @@ def main(config):
     # 数据集路径
     folder_path = {
         'live': '/home/ssl/Database/databaserelease2/',
-        'csiq': '/root/data/iqa/CSIQ/',
+        'csiq': '/root/test/iqa/CSIQ/',
         'tid2013': '/home/ssl/Database/TID2013/',
         'livec': '/home/ssl/Database/ChallengeDB_release/ChallengeDB_release/',
         'koniq-10k': '/home/ssl/Database/koniq-10k/',
         'bid': '/home/ssl/Database/BID/',
-        'multilevel': '/root/data/iqa/multilevel/'
+        'multilevel': '/root/test/iqa/trainval/'
     }
 
     # 原始图片数量
@@ -31,7 +36,7 @@ def main(config):
         'livec': list(range(0, 1162)),
         'koniq-10k': list(range(0, 10073)),
         'bid': list(range(0, 586)),
-        'multilevel': list(range(0, 393)),  # multilevel共有多少组图片
+        'multilevel': list(range(0, 984)),  # multilevel共有多少组图片
     }
     sel_num = img_num[config.dataset]   # number length of select dataset
 

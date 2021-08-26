@@ -316,16 +316,16 @@ class MultiLevelFoler(data.Dataset):
 
         refpath = os.path.join(root)    # 原始图片路径
         refname = [img for img in os.listdir(refpath) if img[:3] == "ref"]  # 所有原始图片名称
-        txtpath = os.path.join(root, 'labels.txt')
-        fh = open(txtpath, 'r')
+        txtpath = os.path.join(root, 'trainvallist.txt')
+        fh = open(txtpath, 'r', encoding='gbk')
         imgnames = []   # 图片名称列表
         target = []     # 清晰度列表，与图片列表对应
         refnames_all = []   # 参考图名称列表
         for line in fh:
-            words = line.split()
-            imgnames.append(words[0])
-            target.append(words[1])
-            refnames_all.append(words[2])
+            words = line.strip().split("____")
+            imgnames.append(os.path.join(root,words[0],words[1],words[2]))
+            target.append(words[3])
+            refnames_all.append(os.path.join(root,words[0],words[1],words[4]))
 
         labels = np.array(target).astype(np.float32)
         refnames_all = np.array(refnames_all)
