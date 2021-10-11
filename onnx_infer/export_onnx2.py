@@ -15,10 +15,10 @@ if __name__ == "__main__":
 
     # exporter settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='./multilevel_3.pth', help="set model checkpoint path")
-    parser.add_argument('--model_out1', type=str, default='./hypernetwork_0729.onnx')
-    parser.add_argument('--model_out2', type=str, default='./hypernetwork_0729.onnx')
-    parser.add_argument('--image', type=str, default="./test/D_03.jpg", help='input image to use')
+    parser.add_argument('--model', type=str, default='../pretrained/multilevel_0_11.pth', help="set model checkpoint path")
+    parser.add_argument('--model_out1', type=str, default='../pretrained/hypernetwork_0829.onnx')
+    parser.add_argument('--model_out2', type=str, default='../pretrained/hypernetwork_0829.onnx')
+    parser.add_argument('--image', type=str, default="", help='input image to use') # ../test/D_03.jpg
 
     args = parser.parse_args()
     print(args)
@@ -39,14 +39,14 @@ if __name__ == "__main__":
     else:
         pixels = 224
         img = np.random.rand(pixels, pixels, 1)
-        input = torch.zeros([1, 1, 224, 224], dtype=torch.float32).to(device)
+        input = torch.zeros([1, 3, 224, 224], dtype=torch.float32).to(device)
     print("input size is..", input.shape)
 
     # ----------------------------load the model
     model_hyper = models.HyperNet(16, 112, 224, 112, 56, 28, 14, 7).to(device=device)
     model_hyper.train(False)
     # load our pre-trained model on the multilevel dataset
-    model_hyper.load_state_dict((torch.load('multilevel_3.pth', map_location=device)))
+    model_hyper.load_state_dict((torch.load(args.model, map_location=device)))
     print('Loading model_hyper network and weight...')
     paras = model_hyper(input)  # 0.8375
     # ----------------------------export the hyper network model
