@@ -47,14 +47,17 @@ def deal_one_folder(path="", label_path=""):
 
 
 if __name__ == "__main__":
-    paths = [r"F:\Data\IQA\multilevel\train\20210423-10level",
-             r"F:\Data\IQA\multilevel\train\20210803-9level",
-             r"F:\Data\IQA\multilevel\train\20210803-BMDT",
-             r"F:\Data\IQA\multilevel\train\20210803-CF",
-             r"F:\Data\IQA\multilevel\train\20210803-TP",
-             r"F:\Data\IQA\multilevel\train\20210813-CF"
-             ]
-    label_path = r"F:\Data\IQA\multilevel\trainvallist.txt"
+    paths = [r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210423-10level",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210803-9level",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210803-BMDT",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210803-CF",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210803-TP",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210813-CF",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210819-9level",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210909-CF",
+             r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\20210922-莱宝",
+            ]
+    label_path = r"D:\DataSets\iqa\hyperIQA\multilevel\trainval\trainvallist.txt"
 
     for path in paths:
         print("处理 {} 文件夹".format(path))
