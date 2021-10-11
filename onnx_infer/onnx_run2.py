@@ -74,8 +74,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     # exporter settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default='./hypernetwork_targetnet.onnx', help="set model checkpoint path")
-    parser.add_argument('--image', type=str, default="./test/D_03.jpg", help='input image to use')
+    parser.add_argument('--model', type=str, default='../pretrained/hypernetwork_0829.onnx', help="set model checkpoint path")
+    parser.add_argument('--image', type=str, default="../test/1.bmp", help='input image to use')
 
     args = parser.parse_args()
     # print(args)
