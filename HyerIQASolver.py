@@ -77,8 +77,8 @@ class HyperIQASolver(object):
 
                 # Quality prediction
                 pred = model_target(paras['target_in_vec'])  # while 'paras['target_in_vec']' is the input to target net
-                pred_scores = pred_scores + pred.cpu().tolist()
-                gt_scores = gt_scores + label.cpu().tolist()
+                pred_scores = pred_scores + [pred.cpu().tolist()]      #pred_scores + pred.cpu().tolist()
+                gt_scores = gt_scores + [label.cpu().tolist()] #gt_scores + label.cpu().tolist()
 
                 loss = self.l1_loss(pred.squeeze(), label.float().detach())
                 epoch_loss.append(loss.item())

@@ -25,7 +25,7 @@ def main(config):
         'livec': '/home/ssl/Database/ChallengeDB_release/ChallengeDB_release/',
         'koniq-10k': '/home/ssl/Database/koniq-10k/',
         'bid': '/home/ssl/Database/BID/',
-        'multilevel': '/root/data/iqa/trainval/'
+        'multilevel': '/root/data/datasets/iqa/hyperIQA/trainval/'
     }
 
     # 原始图片数量, 如果修改数据集大小，需修改img_num
@@ -36,7 +36,7 @@ def main(config):
         'livec': list(range(0, 1162)),
         'koniq-10k': list(range(0, 10073)),
         'bid': list(range(0, 586)),
-        'multilevel': list(range(0, 984)),  # multilevel共有多少组图片
+        'multilevel': list(range(0, 1078)),  # multilevel共有多少组图片
     }
     sel_num = img_num[config.dataset]   # number length of select dataset
 
